@@ -1,7 +1,7 @@
-package com.example.stringredistemplate.service.impl;
+package com.example.redis.template.demo.service.impl;
 
 
-import com.example.stringredistemplate.service.RedisService;
+import com.example.redis.template.demo.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

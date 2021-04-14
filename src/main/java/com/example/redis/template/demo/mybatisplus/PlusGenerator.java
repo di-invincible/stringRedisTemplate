@@ -1,4 +1,4 @@
-package com.example.stringredistemplate.mybatisplus;
+package com.example.redis.template.demo.mybatisplus;
 
 
 

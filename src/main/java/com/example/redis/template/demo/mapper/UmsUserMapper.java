@@ -1,6 +1,6 @@
-package com.example.stringredistemplate.mapper;
+package com.example.redis.template.demo.mapper;
 
-import com.example.stringredistemplate.entity.po.UmsUser;
+import com.example.redis.template.demo.entity.po.UmsUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

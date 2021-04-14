@@ -1,8 +1,8 @@
-package com.example.stringredistemplate.service.impl;
+package com.example.redis.template.demo.service.impl;
 
-import com.example.stringredistemplate.entity.po.UmsUser;
-import com.example.stringredistemplate.mapper.UmsUserMapper;
-import com.example.stringredistemplate.service.UmsUserService;
+import com.example.redis.template.demo.service.UmsUserService;
+import com.example.redis.template.demo.entity.po.UmsUser;
+import com.example.redis.template.demo.mapper.UmsUserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

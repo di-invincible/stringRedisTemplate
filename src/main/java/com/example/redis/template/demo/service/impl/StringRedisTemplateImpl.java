@@ -1,6 +1,6 @@
-package com.example.stringredistemplate.service.impl;
+package com.example.redis.template.demo.service.impl;
 
-import com.example.stringredistemplate.service.StringRedisService;
+import com.example.redis.template.demo.service.StringRedisService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;

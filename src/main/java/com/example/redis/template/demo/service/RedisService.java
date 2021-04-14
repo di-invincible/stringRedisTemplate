@@ -1,4 +1,4 @@
-package com.example.stringredistemplate.service;
+package com.example.redis.template.demo.service;
 
 import java.util.List;
 import java.util.Map;

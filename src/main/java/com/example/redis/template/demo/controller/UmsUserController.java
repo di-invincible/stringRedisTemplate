@@ -1,4 +1,4 @@
-package com.example.stringredistemplate.controller;
+package com.example.redis.template.demo.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

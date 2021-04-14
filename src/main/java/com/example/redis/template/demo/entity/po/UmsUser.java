@@ -1,4 +1,4 @@
-package com.example.stringredistemplate.entity.po;
+package com.example.redis.template.demo.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
