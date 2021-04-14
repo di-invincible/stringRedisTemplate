@@ -2,6 +2,7 @@ package com.example.redis.template.demo.service.impl;
 
 import com.example.redis.template.demo.service.StringRedisService;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author aaron
  * @since 2021-04-14
  */
+@Service
 public class StringRedisTemplateImpl implements StringRedisService {
 
     @Resource
