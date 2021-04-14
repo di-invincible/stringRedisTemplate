@@ -8,6 +8,7 @@ class RedisTemplateDemoApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("123456");
     }
 
 }

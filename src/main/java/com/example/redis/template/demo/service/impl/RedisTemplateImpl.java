@@ -17,8 +17,8 @@ import java.util.Set;
 @Service
 public class RedisTemplateImpl implements RedisService {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+//    @Autowired
+//    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 存储字符串
@@ -28,7 +28,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public void setString(String key, Object value) {
-        redisTemplate.opsForValue().set(key,value);
+//        redisTemplate.opsForValue().set(key,value);
     }
 
     /**
