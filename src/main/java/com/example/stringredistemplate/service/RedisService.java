@@ -5,12 +5,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 通过 SpringRedisTemplate 操作redis
- * @author wd
+ * 通过 RedisTemplate 操作redis
+ * @author aaron
  * @since 2020-11-23
  */
-public interface RedisServiceBySpringRedisTemplate {
-
+public interface RedisService{
 
     /**
      * 存储字符串
@@ -290,6 +289,4 @@ public interface RedisServiceBySpringRedisTemplate {
      * @return Long
      */
     Long listRemove(String key, long count, Object value);
-
-
 }

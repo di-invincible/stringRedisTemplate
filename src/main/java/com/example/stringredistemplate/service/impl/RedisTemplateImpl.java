@@ -1,17 +1,25 @@
 package com.example.stringredistemplate.service.impl;
 
 
-import com.example.stringredistemplate.service.RedisServiceByRedisTemplate;
+import com.example.stringredistemplate.service.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * @author wd
+ * @author aaron
  * @since 2020-12-02
  */
-public class RedisServiceByRedisTemplateImpl implements RedisServiceByRedisTemplate {
+@Service
+public class RedisTemplateImpl implements RedisService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
     /**
      * 存储字符串
      *
@@ -20,7 +28,7 @@ public class RedisServiceByRedisTemplateImpl implements RedisServiceByRedisTempl
      */
     @Override
     public void setString(String key, Object value) {
-
+        redisTemplate.opsForValue().set(key,value);
     }
 
     /**

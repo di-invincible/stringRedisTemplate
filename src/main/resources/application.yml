@@ -9,3 +9,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/javacode?useSSL=false&serverTimezone=Hongkong&allowPublicKeyRetrieval=true
     username: root
     password: root
+
+
+logging:
+  file:
+    name: G:/logs/stringRedisTemplate.log #添加开启admin的日志监控
+  level:
+    com.lanlinker.cloud.labor: debug
