@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 通过 RedisTemplate 操作redis
+ *
  * @author aaron
  * @since 2020-11-23
  */
@@ -36,7 +37,7 @@ public interface RedisService{
      * @param key key
      * @return String
      */
-    String get(String key);
+    Object get(String key);
 
     /**
      * 删除字符串数据
@@ -277,9 +278,9 @@ public interface RedisService{
      * 获取Set结构
      *
      * @param key key
-     * @return Set<String>
+     * @return Set<Object>
      */
-    Set<String> setMembers(String key);
+    Set<Object> setMembers(String key);
 
     /**
      * 向Set结构中添加属性
@@ -333,9 +334,9 @@ public interface RedisService{
      * @param key   key
      * @param start 起始
      * @param end   结束
-     * @return List<String>
+     * @return List<Object>
      */
-    List<String> listRange(String key, long start, long end);
+    List<Object> listRange(String key, long start, long end);
 
     /**
      * 获取List结构的长度
@@ -352,7 +353,7 @@ public interface RedisService{
      * @param index 索引
      * @return Object
      */
-    String listIndex(String key, long index);
+    Object listIndex(String key, long index);
 
     /**
      * 向List结构中添加属性

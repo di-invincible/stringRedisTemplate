@@ -1,8 +1,6 @@
 package com.example.redis.template.demo.service.impl;
 
-
 import com.example.redis.template.demo.service.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +8,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author aaron
@@ -28,8 +27,8 @@ public class RedisTemplateImpl implements RedisService {
      * @param value value
      */
     @Override
-    public void setString(String key, Object value) {
-//        redisTemplate.opsForValue().set(key,value);
+    public void set(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
     }
 
     /**
@@ -40,8 +39,8 @@ public class RedisTemplateImpl implements RedisService {
      * @param time  过期时间
      */
     @Override
-    public void setString(String key, Object value, long time) {
-
+    public void set(String key, String value, long time) {
+        redisTemplate.opsForValue().set(key, value, time);
     }
 
     /**
@@ -51,8 +50,8 @@ public class RedisTemplateImpl implements RedisService {
      * @return Object
      */
     @Override
-    public Object getString(String key) {
-        return null;
+    public Object get(String key) {
+        return redisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -62,8 +61,8 @@ public class RedisTemplateImpl implements RedisService {
      * @return Boolean
      */
     @Override
-    public Boolean deleteString(String key) {
-        return null;
+    public Boolean delete(String key) {
+        return redisTemplate.delete(key);
     }
 
     /**
@@ -73,8 +72,20 @@ public class RedisTemplateImpl implements RedisService {
      * @return Long
      */
     @Override
-    public Long deleteString(List<String> keys) {
-        return null;
+    public Long delete(List<String> keys) {
+        return redisTemplate.delete(keys);
+    }
+
+    /**
+     * 设置过期时间
+     *
+     * @param key  key
+     * @param time 过期时间  默认 单位秒
+     * @return Boolean
+     */
+    @Override
+    public Boolean expire(String key, long time) {
+        return redisTemplate.expire(key, time, TimeUnit.SECONDS);
     }
 
     /**
@@ -85,8 +96,8 @@ public class RedisTemplateImpl implements RedisService {
      * @return Boolean
      */
     @Override
-    public Boolean expire(String key, long time) {
-        return null;
+    public Boolean expire(String key, long time, TimeUnit timeUnit) {
+        return redisTemplate.expire(key, time, timeUnit);
     }
 
     /**
@@ -97,7 +108,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long getExpire(String key) {
-        return null;
+        return redisTemplate.getExpire(key);
     }
 
     /**
@@ -108,7 +119,18 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Boolean hasKey(String key) {
-        return null;
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
+     * 按delta递增 以增量的方式将long值存储在变量中
+     *
+     * @param key key
+     * @return Long
+     */
+    @Override
+    public Long increment(String key) {
+        return redisTemplate.opsForValue().increment(key);
     }
 
     /**
@@ -120,7 +142,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long increment(String key, long delta) {
-        return null;
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 
     /**
@@ -131,8 +153,43 @@ public class RedisTemplateImpl implements RedisService {
      * @return Long
      */
     @Override
-    public Long increment(String key, double delta) {
-        return null;
+    public Double increment(String key, double delta) {
+        return redisTemplate.opsForValue().increment(key, delta);
+    }
+
+    /**
+     * 按delta递增 以增量的方式将long值存储在变量中
+     *
+     * @param key key
+     * @return Long
+     */
+    @Override
+    public Long decrement(String key) {
+        return redisTemplate.opsForValue().decrement(key);
+    }
+
+    /**
+     * 按delta递增 以增量的方式将long值存储在变量中
+     *
+     * @param key   key
+     * @param delta 变量
+     * @return Long
+     */
+    @Override
+    public Long decrement(String key, long delta) {
+        return redisTemplate.opsForValue().increment(key, delta);
+    }
+
+    /**
+     * 按delta递增 以增量的方式将double值存储在变量中
+     *
+     * @param key   key
+     * @param delta 变量
+     * @return Double
+     */
+    @Override
+    public Double decrement(String key, double delta) {
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 
     /**
@@ -143,12 +200,12 @@ public class RedisTemplateImpl implements RedisService {
      * @return Object
      */
     @Override
-    public Object hashGet(String key, String hashKey) {
-        return null;
+    public Object hashGet(String key, Object hashKey) {
+        return redisTemplate.opsForHash().get(key, hashKey);
     }
 
     /**
-     * 向Hash结构中放入一个属性
+     * 向Hash结构中放入一个属性 并设置整个Hash结构的过期时间
      *
      * @param key     key
      * @param hashKey hash数据的key
@@ -157,8 +214,9 @@ public class RedisTemplateImpl implements RedisService {
      * @return Boolean
      */
     @Override
-    public Boolean hashSet(String key, String hashKey, Object value, long time) {
-        return null;
+    public Boolean hashSet(String key, Object hashKey, Object value, long time, TimeUnit timeUnit) {
+        redisTemplate.opsForHash().put(key, hashKey, value);
+        return expire(key, time, timeUnit);
     }
 
     /**
@@ -170,7 +228,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public void hashSet(String key, String hashKey, Object value) {
-
+        redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
     /**
@@ -181,11 +239,11 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Map<Object, Object> hashGetAll(String key) {
-        return null;
+        return redisTemplate.opsForHash().entries(key);
     }
 
     /**
-     * 直接设置整个Hash结构
+     * 直接设置整个Hash结构 并设置过期时间
      *
      * @param key  key
      * @param map  map
@@ -194,7 +252,23 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Boolean hashSetAll(String key, Map<String, Object> map, long time) {
-        return null;
+        redisTemplate.opsForHash().putAll(key, map);
+        return expire(key, time);
+    }
+
+    /**
+     * 直接设置整个Hash结构
+     *
+     * @param key      key
+     * @param map      map
+     * @param time     过期时间
+     * @param timeUnit 时间单位
+     * @return Boolean
+     */
+    @Override
+    public Boolean hashSetAll(String key, Map<String, Object> map, long time, TimeUnit timeUnit) {
+        redisTemplate.opsForHash().putAll(key, map);
+        return expire(key, time, timeUnit);
     }
 
     /**
@@ -205,7 +279,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public void hashSetAll(String key, Map<String, Object> map) {
-
+        redisTemplate.opsForHash().putAll(key, map);
     }
 
     /**
@@ -216,7 +290,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public void hashDelete(String key, Object... hashKey) {
-
+        redisTemplate.opsForHash().delete(key, hashKey);
     }
 
     /**
@@ -227,8 +301,8 @@ public class RedisTemplateImpl implements RedisService {
      * @return Boolean
      */
     @Override
-    public Boolean hashHasKey(String key, String hashKey) {
-        return null;
+    public Boolean hashHasKey(String key, Object hashKey) {
+        return redisTemplate.opsForHash().hasKey(key, hashKey);
     }
 
     /**
@@ -241,7 +315,20 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long hashIncrement(String key, String hashKey, Long delta) {
-        return null;
+        return redisTemplate.opsForHash().increment(key, hashKey, delta);
+    }
+
+    /**
+     * Hash结构中属性递增
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param delta   delta
+     * @return Long
+     */
+    @Override
+    public Double hashIncrement(String key, String hashKey, Double delta) {
+        return redisTemplate.opsForHash().increment(key, hashKey, delta);
     }
 
     /**
@@ -254,7 +341,20 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long hashDecrement(String key, String hashKey, Long delta) {
-        return null;
+        return redisTemplate.opsForHash().increment(key, hashKey, -delta);
+    }
+
+    /**
+     * Hash结构中属性递减
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param delta   delta
+     * @return Double
+     */
+    @Override
+    public Double hashDecrement(String key, String hashKey, Double delta) {
+        return redisTemplate.opsForHash().increment(key, hashKey, -delta);
     }
 
     /**
@@ -265,7 +365,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Set<Object> setMembers(String key) {
-        return null;
+        return redisTemplate.opsForSet().members(key);
     }
 
     /**
@@ -277,20 +377,23 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long setAdd(String key, Object... values) {
-        return null;
+        return redisTemplate.opsForSet().add(key, values);
     }
 
     /**
      * 向Set结构中添加属性
      *
-     * @param key    key
-     * @param time   过期时间
-     * @param values values
+     * @param key      key
+     * @param time     过期时间
+     * @param timeUnit 时间单位
+     * @param values   values
      * @return Long
      */
     @Override
-    public Long setAdd(String key, long time, Object... values) {
-        return null;
+    public Long setAdd(String key, long time, TimeUnit timeUnit, Object... values) {
+        Long count = redisTemplate.opsForSet().add(key, values);
+        expire(key, time, timeUnit);
+        return count;
     }
 
     /**
@@ -302,7 +405,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Boolean setIsMember(String key, Object value) {
-        return null;
+        return redisTemplate.opsForSet().isMember(key, value);
     }
 
     /**
@@ -313,7 +416,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long setSize(String key) {
-        return null;
+        return redisTemplate.opsForSet().size(key);
     }
 
     /**
@@ -325,7 +428,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long setRemove(String key, Object... values) {
-        return null;
+        return redisTemplate.opsForSet().remove(key, values);
     }
 
     /**
@@ -338,7 +441,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public List<Object> listRange(String key, long start, long end) {
-        return null;
+        return redisTemplate.opsForList().range(key, start, end);
     }
 
     /**
@@ -349,7 +452,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listSize(String key) {
-        return null;
+        return redisTemplate.opsForList().size(key);
     }
 
     /**
@@ -361,7 +464,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Object listIndex(String key, long index) {
-        return null;
+        return redisTemplate.opsForList().index(key, index);
     }
 
     /**
@@ -373,7 +476,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listPush(String key, Object value) {
-        return null;
+        return redisTemplate.opsForList().rightPush(key, value);
     }
 
     /**
@@ -386,7 +489,26 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listPush(String key, Object value, long time) {
-        return null;
+        Long index = redisTemplate.opsForList().rightPush(key, value);
+        expire(key, time);
+        return index;
+    }
+
+    /**
+     * 向List结构中添加属性
+     *
+     * @param key      key
+     * @param value    value
+     * @param time     过期时间
+     * @param timeUnit 时间单位
+     * @return Long
+     */
+    @Override
+    public Long listPush(String key, Object value, long time, TimeUnit timeUnit) {
+        Long index = redisTemplate.opsForList().rightPush(key, value);
+        //todo 死锁
+        expire(key, time, timeUnit);
+        return index;
     }
 
     /**
@@ -398,7 +520,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listPushAll(String key, Object... values) {
-        return null;
+        return redisTemplate.opsForList().rightPushAll(key, values);
     }
 
     /**
@@ -411,7 +533,9 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listPushAll(String key, Long time, Object... values) {
-        return null;
+        Long count = redisTemplate.opsForList().rightPushAll(key, values);
+        expire(key, time);
+        return count;
     }
 
     /**
@@ -424,6 +548,7 @@ public class RedisTemplateImpl implements RedisService {
      */
     @Override
     public Long listRemove(String key, long count, Object value) {
-        return null;
+        return redisTemplate.opsForList().remove(key, count, value);
     }
+
 }

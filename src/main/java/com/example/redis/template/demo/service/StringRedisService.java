@@ -1,7 +1,5 @@
 package com.example.redis.template.demo.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +11,6 @@ import java.util.concurrent.TimeUnit;
  * @author aaron
  * @since 2020-11-23
  */
-@Service
 public interface StringRedisService {
 
 
@@ -416,6 +413,4 @@ public interface StringRedisService {
      * @return Long
      */
     Long listRemove(String key, long count, String value);
-
-
 }
