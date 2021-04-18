@@ -27,7 +27,7 @@ public class RedisTemplateImpl implements RedisService {
      * @param value value
      */
     @Override
-    public void set(String key, String value) {
+    public void set(String key, Object value) {
         redisTemplate.opsForValue().set(key, value);
     }
 
@@ -39,7 +39,7 @@ public class RedisTemplateImpl implements RedisService {
      * @param time  过期时间
      */
     @Override
-    public void set(String key, String value, long time) {
+    public void set(String key, Object value, long time) {
         redisTemplate.opsForValue().set(key, value, time);
     }
 

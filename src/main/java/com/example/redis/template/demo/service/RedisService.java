@@ -20,7 +20,7 @@ public interface RedisService{
      * @param key   key
      * @param value value
      */
-    void set(String key, String value);
+    void set(String key, Object value);
 
     /**
      * 存储字符串
@@ -29,7 +29,7 @@ public interface RedisService{
      * @param value value
      * @param time  过期时间
      */
-    void set(String key, String value, long time);
+    void set(String key, Object value, long time);
 
     /**
      * 获取字符串数据
